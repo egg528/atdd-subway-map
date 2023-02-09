@@ -60,7 +60,7 @@ public class Sections {
     }
 
     private boolean isContainStation(Station station){
-        return sections.contains(station);
+        return getStations().contains(station);
     }
 
     private boolean hasOnlyOneSection(){

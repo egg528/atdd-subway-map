@@ -20,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import subway.common.DomainExceptionType;
 
-@DirtiesContext
 @Sql(
         scripts = "/sql/insert-line-with-oneSection.sql",
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
