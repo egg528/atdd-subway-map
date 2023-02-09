@@ -55,44 +55,17 @@ public class Line {
     }
 
     public void addSection(Section section) {
-        if(!isLineDownStationEqualsSectionUpStation(section.getUpStation()))
-            throw new DomainException(DomainExceptionType.UPDOWN_STATION_MISS_MATCH);
-
-        if(isContainStation(section.getDownStation()))
-            throw new DomainException(DomainExceptionType.DOWN_STATION_EXIST_IN_LINE);
-
+        sections.addSection(this.downStationId, section);
 
         this.downStationId = section.getDownStation().getId();
-        sections.addSections(section);
         lineDistance += section.getSectionDistance();
     }
 
     public void deleteSection(Station station) {
-        if(!isLineDownStation(station))
-            throw new DomainException(DomainExceptionType.NOT_DOWN_STATION);
-
-        if(hasOnlyOneSection())
-            throw new DomainException(DomainExceptionType.CANT_DELETE_SECTION);
+        sections.deletionSection(this.downStationId, station);
 
         Section targetSection = sections.getSectionByDownStatoinId(station.getId());
         this.lineDistance -= targetSection.getSectionDistance();
         this.downStationId = targetSection.getUpStation().getId();
-        sections.deletionSection(station);
-    }
-
-    private boolean isLineDownStationEqualsSectionUpStation(Station newSectionUpStation){
-        return this.downStationId == newSectionUpStation.getId();
-    }
-
-    private boolean isContainStation(Station station){
-        return getStationList().contains(station);
-    }
-
-    private boolean hasOnlyOneSection(){
-        return sections.getSectionCount() == 1;
-    }
-
-    private boolean isLineDownStation(Station station){
-        return this.downStationId == station.getId();
     }
 }
